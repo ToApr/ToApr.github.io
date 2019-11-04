@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小时候" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="前言1.什么是消息？   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。 2. 什么是消息队列中间件   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初始RabbitMQ">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;2019&#x2F;11&#x2F;02&#x2F;hello-RabbitMQ&#x2F;index.html">
+<meta property="og:site_name" content="小时候">
+<meta property="og:description" content="前言1.什么是消息？   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。 2. 什么是消息队列中间件   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;fanout.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;direct.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;topic.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;rpc.png">
+<meta property="og:updated_time" content="2019-11-04T04:04:45.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;fanout.png">
+
+<link rel="canonical" href="https://www.51qq.club/2019/11/02/hello-RabbitMQ/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>初始RabbitMQ | 小时候</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小时候</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">最新的技术分享，摘抄，记录点滴！</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/02/hello-RabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liufei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小时候">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初始RabbitMQ
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-02 16:43:23" itemprop="dateCreated datePublished" datetime="2019-11-02T16:43:23+08:00">2019-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 12:04:45" itemprop="dateModified" datetime="2019-11-04T12:04:45+08:00">2019-11-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="1-什么是消息？"><a href="#1-什么是消息？" class="headerlink" title="1.什么是消息？"></a>1.什么是消息？</h2><p>   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。</p>
+<h2 id="2-什么是消息队列中间件"><a href="#2-什么是消息队列中间件" class="headerlink" title="2. 什么是消息队列中间件"></a>2. 什么是消息队列中间件</h2><p>   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可以在分布式环境下扩展进程间的通信。</p>
+<h2 id="3-为什么要用消息队列，消息中间件的作用是什么"><a href="#3-为什么要用消息队列，消息中间件的作用是什么" class="headerlink" title="3.为什么要用消息队列，消息中间件的作用是什么?"></a>3.为什么要用消息队列，消息中间件的作用是什么?</h2><p>  解耦，冗余，扩展性，削峰，可恢复性，顺序性，缓冲，异步通信</p>
+<h1 id="实战安装"><a href="#实战安装" class="headerlink" title="实战安装"></a>实战安装</h1><h2 id="1-rabibtmq-安装步骤（windows）"><a href="#1-rabibtmq-安装步骤（windows）" class="headerlink" title="1.rabibtmq 安装步骤（windows）"></a>1.rabibtmq 安装步骤（windows）</h2><p>  添加环境变量 RABBITMQ_BASE。（可不做）<br>  安装向导链接：<a href="https://www.rabbitmq.com/install-windows.html" target="_blank" rel="noopener">https://www.rabbitmq.com/install-windows.html</a><br>  安装 Erlang  ，安装rabbitmq server.<br> Erlang 相当.framwork ,有了这玩意才能安装运行 rabbitmq server<br> 傻瓜式安装。  </p>
+<p> Erlang 20.2 or later </p>
+<table>
+<thead>
+<tr>
+<th>Erlang  Cookie 位置</th>
+<th>对应位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%HOMEDRIVE%%HOMEPATH%.erlang.cookie</td>
+<td>C:\Users%USERNAME%.erlang.cookie</td>
+<td>不详,可能 CLI tools</td>
+</tr>
+<tr>
+<td>%USERPROFILE%.erlang.cookie</td>
+<td>C:\WINDOWS\system32\config\systemprofile</td>
+<td>for the RabbitMQ Windows service</td>
+</tr>
+<tr>
+<td>## 2.rabitmq日志，消息DB目录</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>配置项</td>
+<td>默认目录</td>
+<td></td>
+</tr>
+<tr>
+<td>———————</td>
+<td>————–</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_BASE</td>
+<td>％APPDATA％ \ RabbitMQ</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_CONFIG_FILE</td>
+<td>％RABBITMQ_BASE％ \ rabbitmq</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_MNESIA_BASE</td>
+<td>％RABBITMQ_BASE％ \ db</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_MNESIA_DIR</td>
+<td>％RABBITMQ_MNESIA_BASE％ \ ％RABBITMQ_NODENAME％</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_LOG_BASE</td>
+<td>％RABBITMQ_BASE％ \ log</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_LOGS</td>
+<td>％RABBITMQ_LOG_BASE％ \ ％RABBITMQ_NODENAME％ .log</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_PLUGINS_DIR</td>
+<td>安装目录/插件</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_PLUGINS_EXPAND_DIR</td>
+<td>％RABBITMQ_MNESIA_BASE％ \ ％RABBITMQ_NODENAME％ -plugins-expand</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_ENABLED_PLUGINS_FILE</td>
+<td>％RABBITMQ_BASE％ \ enabled_plugins</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_CONFIG_FILE</td>
+<td>配置文件目录指定(advanced.config)</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="3-常用管理命令"><a href="#3-常用管理命令" class="headerlink" title="3.常用管理命令"></a>3.常用管理命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rabbitmq-service install</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmq-service enable</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmq-service start</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmqctl status</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmqctl list_users</td>
+<td>查看用户列表</td>
+</tr>
+<tr>
+<td>rabbitmqctl add_user liufei liufei</td>
+<td>添加用户</td>
+</tr>
+<tr>
+<td>rabbitmqctl set_user_tags liufei administrator</td>
+<td>分配用户权限</td>
+</tr>
+<tr>
+<td>rabbitmq-plugins list</td>
+<td>查看插件列表</td>
+</tr>
+<tr>
+<td>rabbitmq-plugins enable rabbitmq_management</td>
+<td>启用Web管理界面插件</td>
+</tr>
+<tr>
+<td>## 4.4.    <a href="http://localhost:15672" target="_blank" rel="noopener">http://localhost:15672</a>  查看管理界面</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><p>我们先来看一个RabbitMQ的运转流程，稍后会对这个流程中所涉及到的一些概念进行详细的解释。</p>
+<h2 id="1-生产者"><a href="#1-生产者" class="headerlink" title="1.生产者"></a>1.生产者</h2><ol>
+<li>生产者连接到RabbitMQ Broker，建立一个连接(Connection)开启一个信道(Channel)<ol start="2">
+<li>生产者声明一个交换器，并设置相关属性，比如交换机类型、是否持久化等</li>
+<li>生产者声明一个队列井设置相关属性，比如是否排他、是否持久化、是否自动删除等</li>
+<li>生产者通过路由键将交换器和队列绑定起来</li>
+<li>生产者发送消息至RabbitMQ Broker，其中包含路由键、交换器等信息</li>
+<li>相应的交换器根据接收到的路由键查找相匹配的队列</li>
+<li>如果找到，则将从生产者发送过来的消息存入相应的队列中</li>
+<li>如果没有找到，则根据生产者配置的属性选择丢弃还是回退给生产者</li>
+<li>关闭信道</li>
+<li>关闭连接<h2 id="2-消费者"><a href="#2-消费者" class="headerlink" title="2.消费者"></a>2.消费者</h2></li>
+<li>消费者连接到RabbitMQ Broker ，建立一个连接(Connection)，开启一个信道(Channel) </li>
+<li>消费者向RabbitMQ Broker请求消费相应队列中的消息，可能会设置相应的回调函数</li>
+<li>等待RabbitMQ Broker回应并投递相应队列中的消息，消费者接收消息</li>
+<li>消费者确认(ack) 接收到的消息</li>
+<li>RabbitMQ从队列中删除相应己经被确认的消息</li>
+<li>关闭信道</li>
+<li>关闭连接<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2></li>
+</ol>
+<strong>队列、交换器、路由key、绑定</strong></li>
+</ol>
+<p>从RabbitMQ的运转流程我们可以知道生产者的消息是发布到交换器上的。而消费者则是从队列上获取消息的。那么消息到底是如何从交换器到队列的呢？我们先具体了解一下这几个概念</p>
+<p> <strong><em>Queue</em></strong>：队列，是RabbitMQ的内部对象，用于存储消息。RabbitMQ中消息只能存储在队列中，生产者投递消息到队列，消费者从队列中获取消息并消费。多个消费者可以订阅同一个队列，这时队列中的消息会被平均分摊(轮询)给多个消费者进行消费，而不是每个消费者都收到所有的消息进行消费。</p>
+<p>注意：RabbitMQ不支持队列层面的广播消费，如果需要广播消费，可以采用一个交换器通过路由Key绑定多个队列，由多个消费者来订阅这些队列的方式。</p>
+<p> <strong><em>Exchange</em></strong>:交换器。在RabbitMQ中，生产者并非直接将消息投递到队列中。真实情况是，生产者将消息发送到Exchange(交换器)，由交换器将消息路由到一个或多个队列中。如果路由不到，或返回给生产者，或直接丢弃，或做其它处理。</p>
+<p><strong><em>RoutingKey</em></strong>:路由Key。生产者将消息发送给交换器的时候，一般会指定一个RoutingKey，用来指定这个消息的路由规则。这个路由Key需要与交换器类型和绑定键(BindingKey)联合使用才能最终生效。在交换器类型和绑定键固定的情况下，生产者可以在发送消息给交换器时通过指定RoutingKey来决定消息流向哪里。</p>
+<p><strong><em>Binding</em></strong>:RabbitMQ通过绑定将交换器和队列关联起来，在绑定的时候一般会指定一个绑定键，这样RabbitMQ就可以指定如何正确的路由到队列了。从这里我们可以看到在RabbitMQ中交换器和队列实际上可以是一对多，也可以是多对多关系。交换器和队列就像我们关系数据库中的两张表。它们同归BindingKey做关联(多对多关系表)。在我们投递消息时，可以通过Exchange和RoutingKey(对应BindingKey)就可以找到相对应的队列。</p>
+<h1 id="RabbitMQ主要有四种类型的交换器："><a href="#RabbitMQ主要有四种类型的交换器：" class="headerlink" title="RabbitMQ主要有四种类型的交换器："></a>RabbitMQ主要有四种类型的交换器：</h1><ul>
+<li><p><strong><em>fanout</em></strong>:扇形交换器，它会把发送到该交换器的消息路由到所有与该交换器绑定的队列中。如果使用扇形交换器，则不会匹配路由Key<br><img src="https://github.com/ToApr/image/blob/master/fanout.png" alt="fanout"></p>
+</li>
+<li><p><strong><em>direct</em></strong>:direct交换器，会把消息路由到RoutingKey与BindingKey完全匹配的队列中。<br><img src="https://github.com/ToApr/image/blob/master/direct.png" alt="direct"></p>
+</li>
+<li><p><strong><em>topic</em></strong>:完全匹配BindingKey和RoutingKey的direct交换器有些时候并不能满足实际业务的需求。topic类型的交换器在匹配规则上进行了扩展，它与direct类型的交换器相似，也是将消息路由到BindingKey和RoutingKey相匹配的队列中，但这里的匹配规则有些不同，它约定•    RoutingKey为一个点号”.”分隔的字符串(被点号”.”分隔开的每一段独立的字符串称为一个单词)，如”hs.rabbitmq.client”，”com.rabbit.client”等。<br>BindingKey和RoutingKey一样也是点号”.”分隔的字符串；<br>BindingKey中可以存在两种特殊字符串”*”和”#”，用于做模糊匹配，其中”*”用于匹配一个单词，”#”用于匹配多规格单词(可以是零个)<br><img src="https://github.com/ToApr/image/blob/master/topic.png" alt="topic"></p>
+</li>
+<li><p><strong><em>header</em></strong>不常用</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>客户端API向导：<a href="https://www.rabbitmq.com/dotnet-api-guide.html" target="_blank" rel="noopener">https://www.rabbitmq.com/dotnet-api-guide.html</a></p>
+<h1 id="RPC调用"><a href="#RPC调用" class="headerlink" title="RPC调用"></a>RPC调用</h1></li>
+</ul>
+<p>RPC ， 是Remote Procedure Call 的简称，即远程过程调用。它是一种通过网络从远程计算<br>机上请求服务，而不需要了解底层网络的技术。RPC 的主要功用是让构建分布式计算更容易，在提供强大的远程调用能力时不损失本地调用的语义简洁性。通俗点来说，假设有两台服务器A 和B ， 一个应用部署在A 服务器上，想要调用B 服务器上应用提供的函数或者方法，由于不在同一个内存空间， 不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p>
+<p><img src="https://github.com/ToApr/image/blob/master/rpc.png" alt="rpc"></p>
+<h2 id="RPC-的处理流程如下"><a href="#RPC-的处理流程如下" class="headerlink" title="RPC 的处理流程如下"></a>RPC 的处理流程如下</h2><ol>
+<li>当客户端启动时，创建一个匿名的回调队列(名称由RabbitMQ 自动创建，图4-7 中的回调队列为amq.gen-LhQzlgv3GhDOv8PIDabOXA ) 。</li>
+<li>客户端为RPC 请求设置2 个属性: replyTo 用来告知RPC 服务端回复请求时的目的队列，即回调队列; correlationld 用来标记一个请求。</li>
+<li>请求被发送到rpc_queue 队列中。</li>
+<li>RPC 服务端监听rpc_queue 队列中的请求，当请求到来时， 服务端会处理并且把带有结果的消息发送给客户端。接收的队列就是replyTo 设定的回调队列。</li>
+<li>客户端监昕回调队列， 当有消息时， 检查correlationld 属性，如果与请求匹配，那就是结果了。<h3 id="什么是备用交换机"><a href="#什么是备用交换机" class="headerlink" title="什么是备用交换机"></a>什么是备用交换机</h3>备用交换机是用来处理消息生产者，投递到指定交换机中不可被正确投递的消息，进入备用交换机。  <h3 id="什么是死信交换机"><a href="#什么是死信交换机" class="headerlink" title="什么是死信交换机"></a>什么是死信交换机</h3>死信交换机是处理 过期消息或者被消费者丢弃的消息，会被路由到死信交换机。  </li>
+</ol>
+<p><strong><em>参考引用：<a href="https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w</a><br>Rabbitmq实战指南  朱忠华 著</em></strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/02/hello-world/" rel="next" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/02/RabbitMq-cluster/" rel="prev" title="RabbitMq集群">
+                  RabbitMq集群 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是消息？"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是消息？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-什么是消息队列中间件"><span class="nav-number">1.2.</span> <span class="nav-text">2. 什么是消息队列中间件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-为什么要用消息队列，消息中间件的作用是什么"><span class="nav-number">1.3.</span> <span class="nav-text">3.为什么要用消息队列，消息中间件的作用是什么?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战安装"><span class="nav-number">2.</span> <span class="nav-text">实战安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-rabibtmq-安装步骤（windows）"><span class="nav-number">2.1.</span> <span class="nav-text">1.rabibtmq 安装步骤（windows）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-常用管理命令"><span class="nav-number">2.2.</span> <span class="nav-text">3.常用管理命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始使用"><span class="nav-number">3.</span> <span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-生产者"><span class="nav-number">3.1.</span> <span class="nav-text">1.生产者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-消费者"><span class="nav-number">3.2.</span> <span class="nav-text">2.消费者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">3.3.</span> <span class="nav-text">基本概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMQ主要有四种类型的交换器："><span class="nav-number">4.</span> <span class="nav-text">RabbitMQ主要有四种类型的交换器：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">5.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC调用"><span class="nav-number">6.</span> <span class="nav-text">RPC调用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC-的处理流程如下"><span class="nav-number">6.1.</span> <span class="nav-text">RPC 的处理流程如下</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是备用交换机"><span class="nav-number">6.1.1.</span> <span class="nav-text">什么是备用交换机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是死信交换机"><span class="nav-number">6.1.2.</span> <span class="nav-text">什么是死信交换机</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="liufei"
+    src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">liufei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liufei</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
