@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小时候" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="RabbitMq 集群  三台机子 - rabbit1，rabbit2， rabbit3 1.第一步配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑&#x2F;etc&#x2F;hosts 文件，在其上添加E 地址与节点Windows Host 位置    C:\Windows\System32\drivers\etc名称的映射信息:      ip 机器名    1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMq集群">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;2019&#x2F;11&#x2F;02&#x2F;RabbitMq-cluster&#x2F;index.html">
+<meta property="og:site_name" content="小时候">
+<meta property="og:description" content="RabbitMq 集群  三台机子 - rabbit1，rabbit2， rabbit3 1.第一步配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑&#x2F;etc&#x2F;hosts 文件，在其上添加E 地址与节点Windows Host 位置    C:\Windows\System32\drivers\etc名称的映射信息:      ip 机器名    1">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T04:04:38.877Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.51qq.club/2019/11/02/RabbitMq-cluster/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>RabbitMq集群 | 小时候</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小时候</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">最新的技术分享，摘抄，记录点滴！</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/02/RabbitMq-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liufei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小时候">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RabbitMq集群
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-02 17:11:21" itemprop="dateCreated datePublished" datetime="2019-11-02T17:11:21+08:00">2019-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 12:04:38" itemprop="dateModified" datetime="2019-11-04T12:04:38+08:00">2019-11-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="RabbitMq-集群"><a href="#RabbitMq-集群" class="headerlink" title="RabbitMq 集群"></a>RabbitMq 集群</h1><p>  三台机子 - rabbit1，rabbit2， rabbit3</p>
+<h3 id="1-第一步"><a href="#1-第一步" class="headerlink" title="1.第一步"></a>1.第一步</h3><p>配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑/etc/hosts 文件，在其上添加E 地址与节点<br>Windows Host 位置    C:\Windows\System32\drivers\etc<br>名称的映射信息:  </p>
+<table>
+<thead>
+<tr>
+<th>ip</th>
+<th>机器名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192 . 168.0 .2</td>
+<td>rabbit1</td>
+</tr>
+<tr>
+<td>192.168.0 .3</td>
+<td>rabbit2</td>
+</tr>
+<tr>
+<td>192.168.0 . 4</td>
+<td>rabbit3</td>
+</tr>
+</tbody></table>
+<h3 id="2-第二步"><a href="#2-第二步" class="headerlink" title="2. 第二步"></a>2. 第二步</h3><p>编辑RabbitMQ 的cookie 文件，以确保各个节点的cookie 文件使用的是同一个值。<br>可以读取node1 节点的cookie 值， 然后将其复制到node2 和node3 节点中。cookie 文件默认路<br>径为C:\WINDOWS\system32\config\systemprofile 或者C:\Users%USERNAME%.erlang.cookie 相当于密钥令牌，集群中的RabbitMQ 节点需要通过交换密钥令牌以获得相互认证。  </p>
+<h3 id="3-第三步"><a href="#3-第三步" class="headerlink" title="3. 第三步"></a>3. 第三步</h3><p>Rabbit2 和rabbit3加入rabbit1.  </p>
+<p>重置 rabbit2 ,rabbit3.   </p>
+<p>*<em>＃on rabbit2 *</em>  </p>
+<p><code>rabbitmqctl stop_app ＃=&gt;停止节点兔子@ rabbit2 ...完成。</code></p>
+<p><code>rabbitmqctl reset ＃=&gt;重置节点rabbit @ rabbit2 ...</code></p>
+<p><code>rabbitmqctl join_cluster rabbit @ rabbit1 ＃=&gt;群集节点rabbit @ rabbit2与[rabbit @ rabbit1] ...完成。</code></p>
+<p><code>rabbitmqctl start_app ＃=&gt;起始节点兔子@ rabbit2 ...完成。</code></p>
+<p><code>rabbitmqctl cluster_status 查看集群状态</code></p>
+<p><strong>#on rabbit3</strong>   </p>
+<p><code>rabbitmqctl stop_app ＃=&gt;停止节点兔子@ rabbit3 ...完成。#on rabbit3</code></p>
+<p><code>rabbitmqctl reset ＃=&gt;重置节点rabbit @ rabbit3 ...</code></p>
+<p><code>rabbitmqctl join_cluster rabbit @ rabbit2 ＃=&gt;群集节点兔子@ rabbit3与兔子@ rabbit2 ...完成。</code></p>
+<p><code>rabbitmqctl start_app ＃=&gt;启动节点rabbit @ rabbit3 ...完成。</code></p>
+<p><code>rabbitmqctl cluster_status 查看集群状态</code></p>
+<p>＃=&gt;节点兔子的集群状态@ rabbit3 … ＃=&gt; [{nodes，[{disc，[rabbit @ rabbit1，rabbit @ rabbit2，rabbit @ rabbit3]}]}，＃=&gt; { running_nodes，[rabbit @ rabbit2，rabbit @ rabbit3]}] ＃=&gt; …完成。#on rabbit3  </p>
+<p>移除集群节点<br>两种方法： </p>
+<ol>
+<li>要移除的节点存活，可以正常使用ctl 命令  </li>
+</ol>
+<p><code>rabbitmqctl  stop_app  停止节点</code></p>
+<p><code>rabbitmqctl reset      重置节点，包括集群信息。</code></p>
+<p>验证  </p>
+<p><code>rabbitmqctl  start_app</code></p>
+<p><code>rabbitmqctl cluster_status</code> </p>
+<p>2.要移除的节点死了，不能使用ctl命令  </p>
+<p> <code>rabbitmqctl forget_cluster_node rabbit@nodel –offline</code> </p>
+<p>“ 一offline” 参数的添加让其可以在非运行状态下将nodel 剥离出当前集群。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/02/hello-RabbitMQ/" rel="next" title="初始RabbitMQ">
+                  <i class="fa fa-chevron-left"></i> 初始RabbitMQ
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMq-集群"><span class="nav-number">1.</span> <span class="nav-text">RabbitMq 集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-第一步"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.第一步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-第二步"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 第二步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-第三步"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 第三步</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="liufei"
+    src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">liufei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liufei</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
