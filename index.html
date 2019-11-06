@@ -9,6 +9,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小时候" type="application/atom+xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -48,12 +49,16 @@
     },
     sidebarPadding: 40
   };
+
+
 </script>
 
+ 
+</script>
   <meta name="description" content="而立之前年，做点喜欢的事，学点新知识，记录下！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="小时候">
-<meta property="og:url" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;">
 <meta property="og:site_name" content="小时候">
 <meta property="og:description" content="而立之前年，做点喜欢的事，学点新知识，记录下！">
 <meta property="og:locale" content="zh-CN">
@@ -161,11 +166,6 @@
     <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
-
-  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
@@ -223,7 +223,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/02/RabbitMq-cluster/">
+    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/05/RabbitMq-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/DCIM.jpg">
@@ -237,7 +237,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/02/RabbitMq-cluster/" class="post-title-link" itemprop="url">RabbitMq集群</a>
+            <a href="/2019/11/05/RabbitMq-cluster/" class="post-title-link" itemprop="url">RabbitMq集群</a>
         </h1>
 
         <div class="post-meta">
@@ -246,26 +246,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-11-02 17:11:21" itemprop="dateCreated datePublished" datetime="2019-11-02T17:11:21+08:00">2019-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 18:44:48" itemprop="dateModified" datetime="2019-11-04T18:44:48+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">中间件</span>
-                  </a>
-                </span>
+              <time title="创建时间：2019-11-05 17:11:21 / 修改时间：11:24:00" itemprop="dateCreated datePublished" datetime="2019-11-05T17:11:21+08:00">2019-11-05</time>
             </span>
 
           
@@ -279,15 +262,57 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="RabbitMq-集群"><a href="#RabbitMq-集群" class="headerlink" title="RabbitMq 集群"></a>RabbitMq 集群</h1><p>  三台机子 - rabbit1，rabbit2， rabbit3</p><h3 id="1-第一步"><a href="#1-第一步" class="headerlink" title="1.第一步"></a>1.第一步</h3><p>配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑/etc/hosts 文件，在其上添加E 地址与节点<br>Windows Host 位置    C:\Windows\System32\drivers\etc<br>名称的映射信息:  </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/02/RabbitMq-cluster/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="RabbitMq-集群"><a href="#RabbitMq-集群" class="headerlink" title="RabbitMq 集群"></a>RabbitMq 集群</h1><p>  三台机子 - rabbit1，rabbit2， rabbit3</p>
+<h3 id="1-第一步"><a href="#1-第一步" class="headerlink" title="1.第一步"></a>1.第一步</h3><p>配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑/etc/hosts 文件，在其上添加E 地址与节点<br>Windows Host 位置    C:\Windows\System32\drivers\etc<br>名称的映射信息:  </p>
+<table>
+<thead>
+<tr>
+<th>ip</th>
+<th>机器名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192 . 168.0 .2</td>
+<td>rabbit1</td>
+</tr>
+<tr>
+<td>192.168.0 .3</td>
+<td>rabbit2</td>
+</tr>
+<tr>
+<td>192.168.0 . 4</td>
+<td>rabbit3</td>
+</tr>
+</tbody></table>
+<h3 id="2-第二步"><a href="#2-第二步" class="headerlink" title="2. 第二步"></a>2. 第二步</h3><p>编辑RabbitMQ 的cookie 文件，以确保各个节点的cookie 文件使用的是同一个值。<br>可以读取node1 节点的cookie 值， 然后将其复制到node2 和node3 节点中。cookie 文件默认路<br>径为C:\WINDOWS\system32\config\systemprofile 或者C:\Users%USERNAME%.erlang.cookie 相当于密钥令牌，集群中的RabbitMQ 节点需要通过交换密钥令牌以获得相互认证。  </p>
+<h3 id="3-第三步"><a href="#3-第三步" class="headerlink" title="3. 第三步"></a>3. 第三步</h3><p>Rabbit2 和rabbit3加入rabbit1.  </p>
+<p>重置 rabbit2 ,rabbit3.   </p>
+<p>*<em>＃on rabbit2 *</em>  </p>
+<p><code>rabbitmqctl stop_app ＃=&gt;停止节点兔子@ rabbit2 ...完成。</code></p>
+<p><code>rabbitmqctl reset ＃=&gt;重置节点rabbit @ rabbit2 ...</code></p>
+<p><code>rabbitmqctl join_cluster rabbit @ rabbit1 ＃=&gt;群集节点rabbit @ rabbit2与[rabbit @ rabbit1] ...完成。</code></p>
+<p><code>rabbitmqctl start_app ＃=&gt;起始节点兔子@ rabbit2 ...完成。</code></p>
+<p><code>rabbitmqctl cluster_status 查看集群状态</code></p>
+<p><strong>#on rabbit3</strong>   </p>
+<p><code>rabbitmqctl stop_app ＃=&gt;停止节点兔子@ rabbit3 ...完成。#on rabbit3</code></p>
+<p><code>rabbitmqctl reset ＃=&gt;重置节点rabbit @ rabbit3 ...</code></p>
+<p><code>rabbitmqctl join_cluster rabbit @ rabbit2 ＃=&gt;群集节点兔子@ rabbit3与兔子@ rabbit2 ...完成。</code></p>
+<p><code>rabbitmqctl start_app ＃=&gt;启动节点rabbit @ rabbit3 ...完成。</code></p>
+<p><code>rabbitmqctl cluster_status 查看集群状态</code></p>
+<p>＃=&gt;节点兔子的集群状态@ rabbit3 … ＃=&gt; [{nodes，[{disc，[rabbit @ rabbit1，rabbit @ rabbit2，rabbit @ rabbit3]}]}，＃=&gt; { running_nodes，[rabbit @ rabbit2，rabbit @ rabbit3]}] ＃=&gt; …完成。#on rabbit3  </p>
+<p>移除集群节点<br>两种方法： </p>
+<ol>
+<li>要移除的节点存活，可以正常使用ctl 命令  </li>
+</ol>
+<p><code>rabbitmqctl  stop_app  停止节点</code></p>
+<p><code>rabbitmqctl reset      重置节点，包括集群信息。</code></p>
+<p>验证  </p>
+<p><code>rabbitmqctl  start_app</code></p>
+<p><code>rabbitmqctl cluster_status</code> </p>
+<p>2.要移除的节点死了，不能使用ctl命令  </p>
+<p> <code>rabbitmqctl forget_cluster_node rabbit@nodel –offline</code> </p>
+<p>“ 一offline” 参数的添加让其可以在非运行状态下将nodel 剥离出当前集群。</p>
+
       
     </div>
 
@@ -296,17 +321,17 @@
     
       <footer class="post-footer">
         <div class="post-eof"></div>
+
       </footer>
   </article>
   
   
   
-
         
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/02/hello-RabbitMQ/">
+    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/05/hello-RabbitMQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/DCIM.jpg">
@@ -320,7 +345,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/02/hello-RabbitMQ/" class="post-title-link" itemprop="url">初始RabbitMQ</a>
+            <a href="/2019/11/05/hello-RabbitMQ/" class="post-title-link" itemprop="url">初始RabbitMQ</a>
         </h1>
 
         <div class="post-meta">
@@ -329,26 +354,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-11-02 16:43:23" itemprop="dateCreated datePublished" datetime="2019-11-02T16:43:23+08:00">2019-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 23:02:40" itemprop="dateModified" datetime="2019-11-04T23:02:40+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" itemprop="url" rel="index">
-                    <span itemprop="name">中间件</span>
-                  </a>
-                </span>
+              <time title="创建时间：2019-11-05 16:43:23 / 修改时间：11:24:03" itemprop="dateCreated datePublished" datetime="2019-11-05T16:43:23+08:00">2019-11-05</time>
             </span>
 
           
@@ -362,15 +370,193 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="1-什么是消息？"><a href="#1-什么是消息？" class="headerlink" title="1.什么是消息？"></a>1.什么是消息？</h2><p>   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。</p><h2 id="2-什么是消息队列中间件"><a href="#2-什么是消息队列中间件" class="headerlink" title="2. 什么是消息队列中间件"></a>2. 什么是消息队列中间件</h2><p>   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可以在分布式环境下扩展进程间的通信。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/02/hello-RabbitMQ/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="1-什么是消息？"><a href="#1-什么是消息？" class="headerlink" title="1.什么是消息？"></a>1.什么是消息？</h2><p>   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。</p>
+<h2 id="2-什么是消息队列中间件"><a href="#2-什么是消息队列中间件" class="headerlink" title="2. 什么是消息队列中间件"></a>2. 什么是消息队列中间件</h2><p>   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可以在分布式环境下扩展进程间的通信。</p>
+<h2 id="3-为什么要用消息队列，消息中间件的作用是什么"><a href="#3-为什么要用消息队列，消息中间件的作用是什么" class="headerlink" title="3.为什么要用消息队列，消息中间件的作用是什么?"></a>3.为什么要用消息队列，消息中间件的作用是什么?</h2><p>  解耦，冗余，扩展性，削峰，可恢复性，顺序性，缓冲，异步通信</p>
+<h1 id="实战安装"><a href="#实战安装" class="headerlink" title="实战安装"></a>实战安装</h1><h2 id="1-rabibtmq-安装步骤（windows）"><a href="#1-rabibtmq-安装步骤（windows）" class="headerlink" title="1.rabibtmq 安装步骤（windows）"></a>1.rabibtmq 安装步骤（windows）</h2><p>  添加环境变量 RABBITMQ_BASE。（可不做）<br>  安装向导链接：<a href="https://www.rabbitmq.com/install-windows.html" target="_blank" rel="noopener">https://www.rabbitmq.com/install-windows.html</a><br>  安装 Erlang  ，安装rabbitmq server.<br> Erlang 相当.framwork ,有了这玩意才能安装运行 rabbitmq server<br> 傻瓜式安装。  </p>
+<p> Erlang 20.2 or later </p>
+<table>
+<thead>
+<tr>
+<th>Erlang  Cookie 位置</th>
+<th>对应位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%HOMEDRIVE%%HOMEPATH%.erlang.cookie</td>
+<td>C:\Users%USERNAME%.erlang.cookie</td>
+<td>不详,可能 CLI tools</td>
+</tr>
+<tr>
+<td>%USERPROFILE%.erlang.cookie</td>
+<td>C:\WINDOWS\system32\config\systemprofile</td>
+<td>for the RabbitMQ Windows service</td>
+</tr>
+<tr>
+<td>## 2.rabitmq日志，消息DB目录</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>配置项</td>
+<td>默认目录</td>
+<td></td>
+</tr>
+<tr>
+<td>———————</td>
+<td>————–</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_BASE</td>
+<td>％APPDATA％ \ RabbitMQ</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_CONFIG_FILE</td>
+<td>％RABBITMQ_BASE％ \ rabbitmq</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_MNESIA_BASE</td>
+<td>％RABBITMQ_BASE％ \ db</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_MNESIA_DIR</td>
+<td>％RABBITMQ_MNESIA_BASE％ \ ％RABBITMQ_NODENAME％</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_LOG_BASE</td>
+<td>％RABBITMQ_BASE％ \ log</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_LOGS</td>
+<td>％RABBITMQ_LOG_BASE％ \ ％RABBITMQ_NODENAME％ .log</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_PLUGINS_DIR</td>
+<td>安装目录/插件</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_PLUGINS_EXPAND_DIR</td>
+<td>％RABBITMQ_MNESIA_BASE％ \ ％RABBITMQ_NODENAME％ -plugins-expand</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_ENABLED_PLUGINS_FILE</td>
+<td>％RABBITMQ_BASE％ \ enabled_plugins</td>
+<td></td>
+</tr>
+<tr>
+<td>RABBITMQ_CONFIG_FILE</td>
+<td>配置文件目录指定(advanced.config)</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="3-常用管理命令"><a href="#3-常用管理命令" class="headerlink" title="3.常用管理命令"></a>3.常用管理命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rabbitmq-service install</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmq-service enable</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmq-service start</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmqctl status</td>
+<td></td>
+</tr>
+<tr>
+<td>rabbitmqctl list_users</td>
+<td>查看用户列表</td>
+</tr>
+<tr>
+<td>rabbitmqctl add_user liufei liufei</td>
+<td>添加用户</td>
+</tr>
+<tr>
+<td>rabbitmqctl set_user_tags liufei administrator</td>
+<td>分配用户权限</td>
+</tr>
+<tr>
+<td>rabbitmq-plugins list</td>
+<td>查看插件列表</td>
+</tr>
+<tr>
+<td>rabbitmq-plugins enable rabbitmq_management</td>
+<td>启用Web管理界面插件</td>
+</tr>
+<tr>
+<td>## 4.4.    <a href="http://localhost:15672" target="_blank" rel="noopener">http://localhost:15672</a>  查看管理界面</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><p>我们先来看一个RabbitMQ的运转流程，稍后会对这个流程中所涉及到的一些概念进行详细的解释。</p>
+<h2 id="1-生产者"><a href="#1-生产者" class="headerlink" title="1.生产者"></a>1.生产者</h2><ol>
+<li>生产者连接到RabbitMQ Broker，建立一个连接(Connection)开启一个信道(Channel)<ol start="2">
+<li>生产者声明一个交换器，并设置相关属性，比如交换机类型、是否持久化等</li>
+<li>生产者声明一个队列井设置相关属性，比如是否排他、是否持久化、是否自动删除等</li>
+<li>生产者通过路由键将交换器和队列绑定起来</li>
+<li>生产者发送消息至RabbitMQ Broker，其中包含路由键、交换器等信息</li>
+<li>相应的交换器根据接收到的路由键查找相匹配的队列</li>
+<li>如果找到，则将从生产者发送过来的消息存入相应的队列中</li>
+<li>如果没有找到，则根据生产者配置的属性选择丢弃还是回退给生产者</li>
+<li>关闭信道</li>
+<li>关闭连接<h2 id="2-消费者"><a href="#2-消费者" class="headerlink" title="2.消费者"></a>2.消费者</h2></li>
+<li>消费者连接到RabbitMQ Broker ，建立一个连接(Connection)，开启一个信道(Channel) </li>
+<li>消费者向RabbitMQ Broker请求消费相应队列中的消息，可能会设置相应的回调函数</li>
+<li>等待RabbitMQ Broker回应并投递相应队列中的消息，消费者接收消息</li>
+<li>消费者确认(ack) 接收到的消息</li>
+<li>RabbitMQ从队列中删除相应己经被确认的消息</li>
+<li>关闭信道</li>
+<li>关闭连接<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2></li>
+</ol>
+<strong>队列、交换器、路由key、绑定</strong></li>
+</ol>
+<p>从RabbitMQ的运转流程我们可以知道生产者的消息是发布到交换器上的。而消费者则是从队列上获取消息的。那么消息到底是如何从交换器到队列的呢？我们先具体了解一下这几个概念</p>
+<p> <strong><em>Queue</em></strong>：队列，是RabbitMQ的内部对象，用于存储消息。RabbitMQ中消息只能存储在队列中，生产者投递消息到队列，消费者从队列中获取消息并消费。多个消费者可以订阅同一个队列，这时队列中的消息会被平均分摊(轮询)给多个消费者进行消费，而不是每个消费者都收到所有的消息进行消费。</p>
+<p>注意：RabbitMQ不支持队列层面的广播消费，如果需要广播消费，可以采用一个交换器通过路由Key绑定多个队列，由多个消费者来订阅这些队列的方式。</p>
+<p> <strong><em>Exchange</em></strong>:交换器。在RabbitMQ中，生产者并非直接将消息投递到队列中。真实情况是，生产者将消息发送到Exchange(交换器)，由交换器将消息路由到一个或多个队列中。如果路由不到，或返回给生产者，或直接丢弃，或做其它处理。</p>
+<p><strong><em>RoutingKey</em></strong>:路由Key。生产者将消息发送给交换器的时候，一般会指定一个RoutingKey，用来指定这个消息的路由规则。这个路由Key需要与交换器类型和绑定键(BindingKey)联合使用才能最终生效。在交换器类型和绑定键固定的情况下，生产者可以在发送消息给交换器时通过指定RoutingKey来决定消息流向哪里。</p>
+<p><strong><em>Binding</em></strong>:RabbitMQ通过绑定将交换器和队列关联起来，在绑定的时候一般会指定一个绑定键，这样RabbitMQ就可以指定如何正确的路由到队列了。从这里我们可以看到在RabbitMQ中交换器和队列实际上可以是一对多，也可以是多对多关系。交换器和队列就像我们关系数据库中的两张表。它们同归BindingKey做关联(多对多关系表)。在我们投递消息时，可以通过Exchange和RoutingKey(对应BindingKey)就可以找到相对应的队列。</p>
+<h1 id="RabbitMQ主要有四种类型的交换器："><a href="#RabbitMQ主要有四种类型的交换器：" class="headerlink" title="RabbitMQ主要有四种类型的交换器："></a>RabbitMQ主要有四种类型的交换器：</h1><ul>
+<li><p><strong><em>fanout</em></strong>:扇形交换器，它会把发送到该交换器的消息路由到所有与该交换器绑定的队列中。如果使用扇形交换器，则不会匹配路由Key<br><img src="https://github.com/ToApr/image/blob/master/fanout.png" alt="fanout"></p>
+</li>
+<li><p><strong><em>direct</em></strong>:direct交换器，会把消息路由到RoutingKey与BindingKey完全匹配的队列中。<br><img src="https://github.com/ToApr/image/blob/master/direct.png" alt="direct"></p>
+</li>
+<li><p><strong><em>topic</em></strong>:完全匹配BindingKey和RoutingKey的direct交换器有些时候并不能满足实际业务的需求。topic类型的交换器在匹配规则上进行了扩展，它与direct类型的交换器相似，也是将消息路由到BindingKey和RoutingKey相匹配的队列中，但这里的匹配规则有些不同，它约定•    RoutingKey为一个点号”.”分隔的字符串(被点号”.”分隔开的每一段独立的字符串称为一个单词)，如”hs.rabbitmq.client”，”com.rabbit.client”等。<br>BindingKey和RoutingKey一样也是点号”.”分隔的字符串；<br>BindingKey中可以存在两种特殊字符串”*”和”#”，用于做模糊匹配，其中”*”用于匹配一个单词，”#”用于匹配多规格单词(可以是零个)<br><img src="https://github.com/ToApr/image/blob/master/topic.png" alt="topic"></p>
+</li>
+<li><p><strong><em>header</em></strong>不常用</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>客户端API向导：<a href="https://www.rabbitmq.com/dotnet-api-guide.html" target="_blank" rel="noopener">https://www.rabbitmq.com/dotnet-api-guide.html</a></p>
+<h1 id="RPC调用"><a href="#RPC调用" class="headerlink" title="RPC调用"></a>RPC调用</h1></li>
+</ul>
+<p>RPC ， 是Remote Procedure Call 的简称，即远程过程调用。它是一种通过网络从远程计算<br>机上请求服务，而不需要了解底层网络的技术。RPC 的主要功用是让构建分布式计算更容易，在提供强大的远程调用能力时不损失本地调用的语义简洁性。通俗点来说，假设有两台服务器A 和B ， 一个应用部署在A 服务器上，想要调用B 服务器上应用提供的函数或者方法，由于不在同一个内存空间， 不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p>
+<p><img src="https://github.com/ToApr/image/blob/master/rpc.png" alt="rpc"></p>
+<h2 id="RPC-的处理流程如下"><a href="#RPC-的处理流程如下" class="headerlink" title="RPC 的处理流程如下"></a>RPC 的处理流程如下</h2><ol>
+<li>当客户端启动时，创建一个匿名的回调队列(名称由RabbitMQ 自动创建，图4-7 中的回调队列为amq.gen-LhQzlgv3GhDOv8PIDabOXA ) 。</li>
+<li>客户端为RPC 请求设置2 个属性: replyTo 用来告知RPC 服务端回复请求时的目的队列，即回调队列; correlationld 用来标记一个请求。</li>
+<li>请求被发送到rpc_queue 队列中。</li>
+<li>RPC 服务端监听rpc_queue 队列中的请求，当请求到来时， 服务端会处理并且把带有结果的消息发送给客户端。接收的队列就是replyTo 设定的回调队列。</li>
+<li>客户端监昕回调队列， 当有消息时， 检查correlationld 属性，如果与请求匹配，那就是结果了。<h3 id="什么是备用交换机"><a href="#什么是备用交换机" class="headerlink" title="什么是备用交换机"></a>什么是备用交换机</h3>备用交换机是用来处理消息生产者，投递到指定交换机中不可被正确投递的消息，进入备用交换机。  <h3 id="什么是死信交换机"><a href="#什么是死信交换机" class="headerlink" title="什么是死信交换机"></a>什么是死信交换机</h3>死信交换机是处理 过期消息或者被消费者丢弃的消息，会被路由到死信交换机。  </li>
+</ol>
+<p><strong><em>参考引用：<a href="https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w</a><br>Rabbitmq实战指南  朱忠华 著</em></strong></p>
+
       
     </div>
 
@@ -379,17 +565,17 @@
     
       <footer class="post-footer">
         <div class="post-eof"></div>
+
       </footer>
   </article>
   
   
   
-
         
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/02/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://www.51qq.club/2019/11/05/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/DCIM.jpg">
@@ -403,7 +589,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/02/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2019/11/05/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
         </h1>
 
         <div class="post-meta">
@@ -412,26 +598,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-11-02 12:03:23" itemprop="dateCreated datePublished" datetime="2019-11-02T12:03:23+08:00">2019-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 21:23:53" itemprop="dateModified" datetime="2019-11-04T21:23:53+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
-                  </a>
-                </span>
+              <time title="创建时间：2019-11-05 10:43:23 / 修改时间：11:24:06" itemprop="dateCreated datePublished" datetime="2019-11-05T10:43:23+08:00">2019-11-05</time>
             </span>
 
           
@@ -446,14 +615,19 @@
 
       
           <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/02/hello-world/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
       
     </div>
 
@@ -462,12 +636,12 @@
     
       <footer class="post-footer">
         <div class="post-eof"></div>
+
       </footer>
   </article>
   
   
   
-
   </div>
 
   
@@ -519,12 +693,6 @@
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
@@ -533,6 +701,11 @@
       </div>
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
         <a href="https://github.com/toapr" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;toapr" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
@@ -544,6 +717,7 @@
       </div>
 
     </div>
+
   </aside>
   <div id="sidebar-dimmer"></div>
 
@@ -554,7 +728,7 @@
     <footer class="footer">
       <div class="footer-inner">
         
-  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备19049379号 </a><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null" rel="noopener" target="_blank">null </a>
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备19049379号 </a><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=" rel="noopener" target="_blank"> </a>
   </div>
 
 <div class="copyright">
@@ -566,6 +740,11 @@
   </span>
   <span class="author" itemprop="copyrightHolder">大飞</span>
 </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
 
         
 <div class="busuanzi-count">
@@ -606,8 +785,6 @@
   </div>
 
   
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="true"></script>
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

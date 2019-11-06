@@ -2,9 +2,9 @@
 <search>
   <entry>
     <title>RabbitMq集群</title>
-    <url>/2019/11/02/RabbitMq-cluster/</url>
-    <content><![CDATA[<h1 id="RabbitMq-集群"><a href="#RabbitMq-集群" class="headerlink" title="RabbitMq 集群"></a>RabbitMq 集群</h1><p>  三台机子 - rabbit1，rabbit2， rabbit3</p><h3 id="1-第一步"><a href="#1-第一步" class="headerlink" title="1.第一步"></a>1.第一步</h3><p>配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑/etc/hosts 文件，在其上添加E 地址与节点<br>Windows Host 位置    C:\Windows\System32\drivers\etc<br>名称的映射信息:  </p><a id="more"></a>
-
+    <url>/2019/11/05/RabbitMq-cluster/</url>
+    <content><![CDATA[<h1 id="RabbitMq-集群"><a href="#RabbitMq-集群" class="headerlink" title="RabbitMq 集群"></a>RabbitMq 集群</h1><p>  三台机子 - rabbit1，rabbit2， rabbit3</p>
+<h3 id="1-第一步"><a href="#1-第一步" class="headerlink" title="1.第一步"></a>1.第一步</h3><p>配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑/etc/hosts 文件，在其上添加E 地址与节点<br>Windows Host 位置    C:\Windows\System32\drivers\etc<br>名称的映射信息:  </p>
 <table>
 <thead>
 <tr>
@@ -54,18 +54,15 @@
 <p> <code>rabbitmqctl forget_cluster_node rabbit@nodel –offline</code> </p>
 <p>“ 一offline” 参数的添加让其可以在非运行状态下将nodel 剥离出当前集群。</p>
 ]]></content>
-      <categories>
-        <category>中间件</category>
-      </categories>
       <tags>
         <tag>rabbitmq</tag>
       </tags>
   </entry>
   <entry>
     <title>初始RabbitMQ</title>
-    <url>/2019/11/02/hello-RabbitMQ/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="1-什么是消息？"><a href="#1-什么是消息？" class="headerlink" title="1.什么是消息？"></a>1.什么是消息？</h2><p>   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。</p><h2 id="2-什么是消息队列中间件"><a href="#2-什么是消息队列中间件" class="headerlink" title="2. 什么是消息队列中间件"></a>2. 什么是消息队列中间件</h2><p>   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可以在分布式环境下扩展进程间的通信。</p><a id="more"></a>
-
+    <url>/2019/11/05/hello-RabbitMQ/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="1-什么是消息？"><a href="#1-什么是消息？" class="headerlink" title="1.什么是消息？"></a>1.什么是消息？</h2><p>   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。</p>
+<h2 id="2-什么是消息队列中间件"><a href="#2-什么是消息队列中间件" class="headerlink" title="2. 什么是消息队列中间件"></a>2. 什么是消息队列中间件</h2><p>   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可以在分布式环境下扩展进程间的通信。</p>
 <h2 id="3-为什么要用消息队列，消息中间件的作用是什么"><a href="#3-为什么要用消息队列，消息中间件的作用是什么" class="headerlink" title="3.为什么要用消息队列，消息中间件的作用是什么?"></a>3.为什么要用消息队列，消息中间件的作用是什么?</h2><p>  解耦，冗余，扩展性，削峰，可恢复性，顺序性，缓冲，异步通信</p>
 <h1 id="实战安装"><a href="#实战安装" class="headerlink" title="实战安装"></a>实战安装</h1><h2 id="1-rabibtmq-安装步骤（windows）"><a href="#1-rabibtmq-安装步骤（windows）" class="headerlink" title="1.rabibtmq 安装步骤（windows）"></a>1.rabibtmq 安装步骤（windows）</h2><p>  添加环境变量 RABBITMQ_BASE。（可不做）<br>  安装向导链接：<a href="https://www.rabbitmq.com/install-windows.html" target="_blank" rel="noopener">https://www.rabbitmq.com/install-windows.html</a><br>  安装 Erlang  ，安装rabbitmq server.<br> Erlang 相当.framwork ,有了这玩意才能安装运行 rabbitmq server<br> 傻瓜式安装。  </p>
 <p> Erlang 20.2 or later </p>
@@ -251,17 +248,14 @@
 </ol>
 <p><strong><em>参考引用：<a href="https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w</a><br>Rabbitmq实战指南  朱忠华 著</em></strong></p>
 ]]></content>
-      <categories>
-        <category>中间件</category>
-      </categories>
       <tags>
         <tag>rabbitmq</tag>
       </tags>
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>/2019/11/02/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a>
+    <url>/2019/11/05/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
@@ -275,8 +269,5 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
   </entry>
 </search>
