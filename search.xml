@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SSH自动加载密钥</title>
+    <url>/2019/11/11/gitssh/</url>
+    <content><![CDATA[<p>#如何让SSH自动加载密钥?<br>ssh 依次从下面的三个地方读取配置。</p>
+<p>命令行选项（就是指上面的ssh -i）<br>用户级配置文件 ~/.ssh/config<br>系统级配置文件 /etc/ssh/ssh_config</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">touch config</span><br><span class="line"></span><br><span class="line">AddKeysToAgent yes</span><br><span class="line">IdentityFile ~/.ssh/id_rsa_github</span><br><span class="line">IdentityFile ~/.ssh/id_rsa </span><br><span class="line"></span><br><span class="line"># Company account</span><br><span class="line">Host *.51qq.club</span><br><span class="line">HostName gitlab.51qq.club</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br><span class="line"># Personal account</span><br><span class="line">Host *.github.com</span><br><span class="line">HostName github.com</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~/.ssh/id_rsa_github</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+  </entry>
+  <entry>
     <title>RabbitMq集群</title>
     <url>/2019/11/05/RabbitMq-cluster/</url>
     <content><![CDATA[<h1 id="RabbitMq-集群"><a href="#RabbitMq-集群" class="headerlink" title="RabbitMq 集群"></a>RabbitMq 集群</h1><p>  三台机子 - rabbit1，rabbit2， rabbit3</p>
