@@ -63,13 +63,13 @@
 <meta property="og:site_name" content="小时候">
 <meta property="og:description" content="前言1.什么是消息？   消息(Message) 是指在应用间传送的数据。消息可以非常简单，比如只包含文本字符串、JSON 等，也可以很复杂，比如内嵌对象。 2. 什么是消息队列中间件   消息队列中间件(Message Queue Middleware 简称为MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。通过提供消息传递和消息排队模型，它可">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;fanout.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;direct.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;topic.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;rpc.png">
-<meta property="og:updated_time" content="2019-11-05T03:24:03.630Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;images&#x2F;fanout.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;images&#x2F;&#x2F;direct.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;images&#x2F;topic.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;images&#x2F;rpc.png">
+<meta property="og:updated_time" content="2019-11-12T06:04:56.819Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;ToApr&#x2F;image&#x2F;blob&#x2F;master&#x2F;fanout.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;images&#x2F;fanout.png">
 
 <link rel="canonical" href="https://www.51qq.club/2019/11/05/hello-RabbitMQ/">
 
@@ -252,10 +252,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-11-05 16:43:23 / 修改时间：11:24:03" itemprop="dateCreated datePublished" datetime="2019-11-05T16:43:23+08:00">2019-11-05</time>
+              <time title="创建时间：2019-11-05 16:43:23" itemprop="dateCreated datePublished" datetime="2019-11-05T16:43:23+08:00">2019-11-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-12 14:04:56" itemprop="dateModified" datetime="2019-11-12T14:04:56+08:00">2019-11-12</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -441,18 +447,18 @@
 <p><strong><em>RoutingKey</em></strong>:路由Key。生产者将消息发送给交换器的时候，一般会指定一个RoutingKey，用来指定这个消息的路由规则。这个路由Key需要与交换器类型和绑定键(BindingKey)联合使用才能最终生效。在交换器类型和绑定键固定的情况下，生产者可以在发送消息给交换器时通过指定RoutingKey来决定消息流向哪里。</p>
 <p><strong><em>Binding</em></strong>:RabbitMQ通过绑定将交换器和队列关联起来，在绑定的时候一般会指定一个绑定键，这样RabbitMQ就可以指定如何正确的路由到队列了。从这里我们可以看到在RabbitMQ中交换器和队列实际上可以是一对多，也可以是多对多关系。交换器和队列就像我们关系数据库中的两张表。它们同归BindingKey做关联(多对多关系表)。在我们投递消息时，可以通过Exchange和RoutingKey(对应BindingKey)就可以找到相对应的队列。</p>
 <h1 id="RabbitMQ主要有四种类型的交换器："><a href="#RabbitMQ主要有四种类型的交换器：" class="headerlink" title="RabbitMQ主要有四种类型的交换器："></a>RabbitMQ主要有四种类型的交换器：</h1><ul>
-<li><p><strong><em>fanout</em></strong>:扇形交换器，它会把发送到该交换器的消息路由到所有与该交换器绑定的队列中。如果使用扇形交换器，则不会匹配路由Key<br><img src="https://github.com/ToApr/image/blob/master/fanout.png" alt="fanout"></p>
+<li><p><strong><em>fanout</em></strong>:扇形交换器，它会把发送到该交换器的消息路由到所有与该交换器绑定的队列中。如果使用扇形交换器，则不会匹配路由Key<br><img src="/images/fanout.png" alt="fanout"></p>
 </li>
-<li><p><strong><em>direct</em></strong>:direct交换器，会把消息路由到RoutingKey与BindingKey完全匹配的队列中。<br><img src="https://github.com/ToApr/image/blob/master/direct.png" alt="direct"></p>
+<li><p><strong><em>direct</em></strong>:direct交换器，会把消息路由到RoutingKey与BindingKey完全匹配的队列中。<br><img src="/images//direct.png" alt="direct"></p>
 </li>
-<li><p><strong><em>topic</em></strong>:完全匹配BindingKey和RoutingKey的direct交换器有些时候并不能满足实际业务的需求。topic类型的交换器在匹配规则上进行了扩展，它与direct类型的交换器相似，也是将消息路由到BindingKey和RoutingKey相匹配的队列中，但这里的匹配规则有些不同，它约定•    RoutingKey为一个点号”.”分隔的字符串(被点号”.”分隔开的每一段独立的字符串称为一个单词)，如”hs.rabbitmq.client”，”com.rabbit.client”等。<br>BindingKey和RoutingKey一样也是点号”.”分隔的字符串；<br>BindingKey中可以存在两种特殊字符串”*”和”#”，用于做模糊匹配，其中”*”用于匹配一个单词，”#”用于匹配多规格单词(可以是零个)<br><img src="https://github.com/ToApr/image/blob/master/topic.png" alt="topic"></p>
+<li><p><strong><em>topic</em></strong>:完全匹配BindingKey和RoutingKey的direct交换器有些时候并不能满足实际业务的需求。topic类型的交换器在匹配规则上进行了扩展，它与direct类型的交换器相似，也是将消息路由到BindingKey和RoutingKey相匹配的队列中，但这里的匹配规则有些不同，它约定•    RoutingKey为一个点号”.”分隔的字符串(被点号”.”分隔开的每一段独立的字符串称为一个单词)，如”hs.rabbitmq.client”，”com.rabbit.client”等。<br>BindingKey和RoutingKey一样也是点号”.”分隔的字符串；<br>BindingKey中可以存在两种特殊字符串”*”和”#”，用于做模糊匹配，其中”*”用于匹配一个单词，”#”用于匹配多规格单词(可以是零个)<br><img src="/images/topic.png" alt="topic"></p>
 </li>
 <li><p><strong><em>header</em></strong>不常用</p>
 <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>客户端API向导：<a href="https://www.rabbitmq.com/dotnet-api-guide.html" target="_blank" rel="noopener">https://www.rabbitmq.com/dotnet-api-guide.html</a></p>
 <h1 id="RPC调用"><a href="#RPC调用" class="headerlink" title="RPC调用"></a>RPC调用</h1></li>
 </ul>
 <p>RPC ， 是Remote Procedure Call 的简称，即远程过程调用。它是一种通过网络从远程计算<br>机上请求服务，而不需要了解底层网络的技术。RPC 的主要功用是让构建分布式计算更容易，在提供强大的远程调用能力时不损失本地调用的语义简洁性。通俗点来说，假设有两台服务器A 和B ， 一个应用部署在A 服务器上，想要调用B 服务器上应用提供的函数或者方法，由于不在同一个内存空间， 不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p>
-<p><img src="https://github.com/ToApr/image/blob/master/rpc.png" alt="rpc"></p>
+<p><img src="/images/rpc.png" alt="rpc"></p>
 <h2 id="RPC-的处理流程如下"><a href="#RPC-的处理流程如下" class="headerlink" title="RPC 的处理流程如下"></a>RPC 的处理流程如下</h2><ol>
 <li>当客户端启动时，创建一个匿名的回调队列(名称由RabbitMQ 自动创建，图4-7 中的回调队列为amq.gen-LhQzlgv3GhDOv8PIDabOXA ) 。</li>
 <li>客户端为RPC 请求设置2 个属性: replyTo 用来告知RPC 服务端回复请求时的目的队列，即回调队列; correlationld 用来标记一个请求。</li>
