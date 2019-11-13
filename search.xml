@@ -14,6 +14,9 @@
 
 <p>参考链接：<br><a href="https://segmentfault.com/a/1190000013798839?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000013798839?utm_source=tag-newest</a></p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
       <tags>
         <tag>git</tag>
       </tags>
@@ -72,6 +75,9 @@
 <p> <code>rabbitmqctl forget_cluster_node rabbit@nodel –offline</code> </p>
 <p>“ 一offline” 参数的添加让其可以在非运行状态下将nodel 剥离出当前集群。</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
       <tags>
         <tag>rabbitmq</tag>
       </tags>

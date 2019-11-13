@@ -55,19 +55,16 @@
 
  
 </script>
-  <meta name="description" content="礼物 - 3.8 	 	 	 	   	 	 		3.8节礼物，来了… 		 		 			 				 					首先，你要输入我的生日 					 					接着，摇一摇… 					 					最后，这就是见证奇迹的时刻… 				 				 					3.8节快乐！ 					祝身体健康,平安长乐 					请打开音量收听…">
+  <meta name="description" content="而立之前年，做点喜欢的事，学点新知识，记录下！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="小时候">
-<meta property="og:url" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;assets&#x2F;demo&#x2F;gift&#x2F;">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;categories&#x2F;%E6%8A%80%E6%9C%AF&#x2F;">
 <meta property="og:site_name" content="小时候">
-<meta property="og:description" content="礼物 - 3.8 	 	 	 	   	 	 		3.8节礼物，来了… 		 		 			 				 					首先，你要输入我的生日 					 					接着，摇一摇… 					 					最后，这就是见证奇迹的时刻… 				 				 					3.8节快乐！ 					祝身体健康,平安长乐 					请打开音量收听…">
+<meta property="og:description" content="而立之前年，做点喜欢的事，学点新知识，记录下！">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;assets&#x2F;demo&#x2F;gift&#x2F;img&#x2F;shake.png">
-<meta property="og:updated_time" content="2019-11-05T02:37:06.461Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;www.51qq.club&#x2F;assets&#x2F;demo&#x2F;gift&#x2F;img&#x2F;shake.png">
 
-<link rel="canonical" href="https://www.51qq.club/assets/demo/gift/">
+<link rel="canonical" href="https://www.51qq.club/categories/%E6%8A%80%E6%9C%AF/">
 
 
 <script id="page-configurations">
@@ -76,13 +73,12 @@
     sidebar: "",
     isHome: false,
     isPost: false,
-    isPage: true,
+    isPage: false,
     isArchive: false
   };
 </script>
 
-  <title> | 小时候
-  </title>
+  <title>分类: 技术 | 小时候</title>
   
 
 
@@ -223,145 +219,78 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
           <div class="content">
             
 
-  <div class="posts-expand">
-    
-    
-    
-    <div class="post-block" lang="zh-CN">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">
-</h1>
-
-<div class="post-meta">
   
-  <ul class="breadcrumb">
-          
-            <li><a href="/assets/">ASSETS</a></li>
-            <li><a href="/assets/demo/">DEMO</a></li>
-          <li>GIFT</li>
-        
-  </ul>
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
-	<title>礼物 - 3.8</title>
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/index.css">
-	<script src="js/zepto.min.js"></script>
-	<script src="js/shake.js"></script>
-</head>
-<body>
-	<!-- <div id="my_player"></div> -->
-	<header>
-		<p>3.8节礼物，来了…</p>
-		<div class="paper-t"></div>
-		<div class="main">
-			<div class="main-top top2">
-				<section id="se1">
-					<p>首先，你要输入我的生日</p>
-					<input id="myBir" type="text" placeholder="4位数，格式为:mmdd"/>
-					<p>接着，摇一摇…</p>
-					<img src="img/shake.png"/>
-					<p>最后，这就是见证奇迹的时刻…</p>
-				</section>
-				<section id="se2" class="hide">
-					<p>3.8节快乐！</p>
-					<p>祝身体健康,平安长乐</p>
-					<p>请打开音量收听…</p>
-				</section>
-			</div>
-		</div>
-		<div class="paper-b"></div>
-	</header>
-</body>
-	<script>
-		var Main = (function() {
-			function playAudio(src) {
-			    if (typeof Audio != "undefined") { 
-			        new Audio(src).play() ;
-			    } else if (typeof device != "undefined") {
-			        if (device.platform == 'Android') {
-			            console.log(src);
-			        }
-			        var mediaRes = new Media(src,
-			            function onSuccess() {
-			                mediaRes.release();
-			            },
-			            function onError(e){
-			                console.log("error playing sound: " + JSON.stringify(e));
-			            });
-			        mediaRes.play();
-
-			    } else {
-			        alert("no sound API to play: " + src);
-			    }
-			}
-			window.addEventListener('shake', autoRun, false);
-			function autoRun(){
-				if($("#myBir").val() == "0425"){
-					$("#se1").hide();
-					$("#se2").show();
-					playAudio("media/gift.ogg");
-				}else{
-					alert("生日错误");
-				}
-				
-			}
-			var init = function() {
-				
-			}
-			return {
-				init: init
-			}
-		})();
-
-		$(Main.init());
-	</script>
-</html>
+  
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        <h1 class="collection-header">技术
+          <small>分类</small>
+        </h1>
       </div>
-      
-      
-      
-    </div>
-    
-  <ul class="breadcrumb">
-          
-            <li><a href="/assets/">ASSETS</a></li>
-            <li><a href="/assets/demo/">DEMO</a></li>
-          <li>GIFT</li>
-        
-  </ul>
 
-    
-    
-    
+      
+    <div class="collection-year">
+      <h1 class="collection-header">2019</h1>
+    </div>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2019-11-11T20:29:15+08:00"
+              content="2019-11-11">
+          11-11
+        </time>
+      </div>
+
+      <h2 class="post-title">
+          <a class="post-title-link" href="/2019/11/11/gitssh/" itemprop="url">
+            <span itemprop="name">SSH自动加载密钥</span>
+          </a>
+      </h2>
+
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2019-11-05T17:11:21+08:00"
+              content="2019-11-05">
+          11-05
+        </time>
+      </div>
+
+      <h2 class="post-title">
+          <a class="post-title-link" href="/2019/11/05/RabbitMq-cluster/" itemprop="url">
+            <span itemprop="name">RabbitMq集群</span>
+          </a>
+      </h2>
+
+    </header>
+  </article>
+
+    </div>
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
           
-    <div class="comments" id="gitalk-container"></div>
 
         </div>
           
@@ -537,23 +466,6 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
-
-<script>
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID: '2bf1cd198bef5d5c4511',
-      clientSecret: 'a98f930b11209a6eb0b6bb5e15e75173f23c8e4f',
-      repo: 'ToApr.github.io',
-      owner: 'ToApr',
-      admin: ['ToApr'],
-      id: '4246c0cb680a9e18ae2d667485513f99',
-        language: 'zh-CN',
-      distractionFreeMode: 'true'
-    });
-    gitalk.render('gitalk-container');
-  }, window.Gitalk);
-</script>
 
 </body>
 </html>

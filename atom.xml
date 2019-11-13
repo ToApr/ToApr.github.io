@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.51qq.club/"/>
-  <updated>2019-11-11T12:48:28.363Z</updated>
+  <updated>2019-11-13T03:55:40.685Z</updated>
   <id>https://www.51qq.club/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://www.51qq.club/2019/11/11/gitssh/"/>
     <id>https://www.51qq.club/2019/11/11/gitssh/</id>
     <published>2019-11-11T12:29:15.000Z</published>
-    <updated>2019-11-11T12:48:28.363Z</updated>
+    <updated>2019-11-13T03:55:40.685Z</updated>
     
     <content type="html"><![CDATA[<h1 id="如何让SSH自动加载密钥"><a href="#如何让SSH自动加载密钥" class="headerlink" title="如何让SSH自动加载密钥?"></a>如何让SSH自动加载密钥?</h1><h2 id="ssh-依次从下面的三个地方读取配置"><a href="#ssh-依次从下面的三个地方读取配置" class="headerlink" title="ssh 依次从下面的三个地方读取配置"></a>ssh 依次从下面的三个地方读取配置</h2><ol><li>命令行选项（就是指上面的ssh -i）</li><li>用户级配置文件 ~/.ssh/config</li><li>系统级配置文件 /etc/ssh/ssh_config</li></ol><hr><p>我们操作用户级配置文件，命令如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">touch config</span><br><span class="line"></span><br><span class="line">AddKeysToAgent yes</span><br><span class="line">IdentityFile ~/.ssh/id_rsa_github</span><br><span class="line">IdentityFile ~/.ssh/id_rsa </span><br><span class="line"></span><br><span class="line"># Company account</span><br><span class="line">Host *.51qq.club</span><br><span class="line">HostName gitlab.51qq.club</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br><span class="line"># Personal account</span><br><span class="line">Host *.github.com</span><br><span class="line">HostName github.com</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~/.ssh/id_rsa_github</span><br></pre></td></tr></table></figure><p>参考链接：<br><a href="https://segmentfault.com/a/1190000013798839?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000013798839?utm_source=tag-newest</a></p>]]></content>
     
@@ -35,6 +35,8 @@
     </summary>
     
     
+      <category term="技术" scheme="https://www.51qq.club/categories/%E6%8A%80%E6%9C%AF/"/>
+    
     
       <category term="git" scheme="https://www.51qq.club/tags/git/"/>
     
@@ -45,7 +47,7 @@
     <link href="https://www.51qq.club/2019/11/05/RabbitMq-cluster/"/>
     <id>https://www.51qq.club/2019/11/05/RabbitMq-cluster/</id>
     <published>2019-11-05T09:11:21.000Z</published>
-    <updated>2019-11-05T03:24:00.226Z</updated>
+    <updated>2019-11-13T03:55:28.124Z</updated>
     
     <content type="html"><![CDATA[<h1 id="RabbitMq-集群"><a href="#RabbitMq-集群" class="headerlink" title="RabbitMq 集群"></a>RabbitMq 集群</h1><p>  三台机子 - rabbit1，rabbit2， rabbit3</p><h3 id="1-第一步"><a href="#1-第一步" class="headerlink" title="1.第一步"></a>1.第一步</h3><p>配置各个节点的hosts 文件，让各个节点都能互相识别对方的存在。比如在LÏnux 系统中可以编辑/etc/hosts 文件，在其上添加E 地址与节点<br>Windows Host 位置    C:\Windows\System32\drivers\etc<br>名称的映射信息:  </p><table><thead><tr><th>ip</th><th>机器名</th></tr></thead><tbody><tr><td>192 . 168.0 .2</td><td>rabbit1</td></tr><tr><td>192.168.0 .3</td><td>rabbit2</td></tr><tr><td>192.168.0 . 4</td><td>rabbit3</td></tr></tbody></table><h3 id="2-第二步"><a href="#2-第二步" class="headerlink" title="2. 第二步"></a>2. 第二步</h3><p>编辑RabbitMQ 的cookie 文件，以确保各个节点的cookie 文件使用的是同一个值。<br>可以读取node1 节点的cookie 值， 然后将其复制到node2 和node3 节点中。cookie 文件默认路<br>径为C:\WINDOWS\system32\config\systemprofile 或者C:\Users%USERNAME%.erlang.cookie 相当于密钥令牌，集群中的RabbitMQ 节点需要通过交换密钥令牌以获得相互认证。  </p><h3 id="3-第三步"><a href="#3-第三步" class="headerlink" title="3. 第三步"></a>3. 第三步</h3><p>Rabbit2 和rabbit3加入rabbit1.  </p><p>重置 rabbit2 ,rabbit3.   </p><p>*<em>＃on rabbit2 *</em>  </p><p><code>rabbitmqctl stop_app ＃=&gt;停止节点兔子@ rabbit2 ...完成。</code></p><p><code>rabbitmqctl reset ＃=&gt;重置节点rabbit @ rabbit2 ...</code></p><p><code>rabbitmqctl join_cluster rabbit @ rabbit1 ＃=&gt;群集节点rabbit @ rabbit2与[rabbit @ rabbit1] ...完成。</code></p><p><code>rabbitmqctl start_app ＃=&gt;起始节点兔子@ rabbit2 ...完成。</code></p><p><code>rabbitmqctl cluster_status 查看集群状态</code></p><p><strong>#on rabbit3</strong>   </p><p><code>rabbitmqctl stop_app ＃=&gt;停止节点兔子@ rabbit3 ...完成。#on rabbit3</code></p><p><code>rabbitmqctl reset ＃=&gt;重置节点rabbit @ rabbit3 ...</code></p><p><code>rabbitmqctl join_cluster rabbit @ rabbit2 ＃=&gt;群集节点兔子@ rabbit3与兔子@ rabbit2 ...完成。</code></p><p><code>rabbitmqctl start_app ＃=&gt;启动节点rabbit @ rabbit3 ...完成。</code></p><p><code>rabbitmqctl cluster_status 查看集群状态</code></p><p>＃=&gt;节点兔子的集群状态@ rabbit3 … ＃=&gt; [{nodes，[{disc，[rabbit @ rabbit1，rabbit @ rabbit2，rabbit @ rabbit3]}]}，＃=&gt; { running_nodes，[rabbit @ rabbit2，rabbit @ rabbit3]}] ＃=&gt; …完成。#on rabbit3  </p><p>移除集群节点<br>两种方法： </p><ol><li>要移除的节点存活，可以正常使用ctl 命令  </li></ol><p><code>rabbitmqctl  stop_app  停止节点</code></p><p><code>rabbitmqctl reset      重置节点，包括集群信息。</code></p><p>验证  </p><p><code>rabbitmqctl  start_app</code></p><p><code>rabbitmqctl cluster_status</code> </p><p>2.要移除的节点死了，不能使用ctl命令  </p><p> <code>rabbitmqctl forget_cluster_node rabbit@nodel –offline</code> </p><p>“ 一offline” 参数的添加让其可以在非运行状态下将nodel 剥离出当前集群。</p>]]></content>
     
@@ -58,6 +60,8 @@
     
     </summary>
     
+    
+      <category term="技术" scheme="https://www.51qq.club/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="rabbitmq" scheme="https://www.51qq.club/tags/rabbitmq/"/>
