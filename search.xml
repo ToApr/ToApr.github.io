@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>git stash 隐藏和恢复工作区</title>
+    <url>/2019/11/21/gitstash/</url>
+    <content><![CDATA[<h1 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h1><p>保存当前工作进度，会把暂存区和工作区的改动保存起来。执行完这个命令后，在运行git status命令，就会发现当前是一个干净的工作区，没有任何改动。使用git stash save ‘message…’可以添加一些注释</p>
+<h1 id="git-stash-list"><a href="#git-stash-list" class="headerlink" title="git stash list"></a>git stash list</h1><p>查看隐藏的进度的列表。意味着git stash 可以执行多次。</p>
+<h1 id="git-stash-pop-–index-stash-id"><a href="#git-stash-pop-–index-stash-id" class="headerlink" title="git stash pop [–index] [stash_id]"></a>git stash pop [–index] [stash_id]</h1><ul>
+<li>git stash pop 恢复最新的隐藏区到工作区</li>
+<li>git stash pop stash@{0}  恢复指定的隐藏区到工作区</li>
+</ul>
+<h1 id="git-stash-clear"><a href="#git-stash-clear" class="headerlink" title="git stash clear"></a>git stash clear</h1><p>删除所有的隐藏区</p>
+<p>参考链接：<br><a href="https://blog.csdn.net/daguanjia11/article/details/73810577" target="_blank" rel="noopener">https://blog.csdn.net/daguanjia11/article/details/73810577</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SSH自动加载密钥</title>
     <url>/2019/11/11/gitssh/</url>
     <content><![CDATA[<h1 id="如何让SSH自动加载密钥"><a href="#如何让SSH自动加载密钥" class="headerlink" title="如何让SSH自动加载密钥?"></a>如何让SSH自动加载密钥?</h1><h2 id="ssh-依次从下面的三个地方读取配置"><a href="#ssh-依次从下面的三个地方读取配置" class="headerlink" title="ssh 依次从下面的三个地方读取配置"></a>ssh 依次从下面的三个地方读取配置</h2><ol>
@@ -272,6 +291,9 @@
 </ol>
 <p><strong><em>参考引用：<a href="https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/9_OQaK2p5hiSgy4IYjvR5w</a><br>Rabbitmq实战指南  朱忠华 著</em></strong></p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
       <tags>
         <tag>rabbitmq</tag>
       </tags>
